@@ -6,8 +6,8 @@ const fixture='# 主题测试\n\n中文 **粗体**、*斜体* 和 `code`。\n\n>
 async function choose(page,name,id){await page.getByRole('radio',{name,exact:true}).click();await expect(page.locator('html')).toHaveAttribute('data-theme-ready',id);}
 async function open(page){await page.getByRole('button',{name:'打开主题设置',exact:true}).click();await expect(page.getByRole('dialog',{name:'主题设置'})).toBeVisible();}
 test('压缩包14套主题均内置、逐套应用并保持原文',async({page})=>{
- const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/');await setSource(page,fixture);await page.getByRole('button',{name:'即时预览',exact:true}).click();await open(page);await expect(page.getByRole('radio')).toHaveCount(16);
- for(let i=0;i<ids.length;i++){await choose(page,names[i],ids[i]);await expect(page.getByRole('radio',{name:names[i],exact:true})).toHaveAttribute('aria-checked','true');await expectSource(page,fixture);expect(await page.locator('.topbar').evaluate(e=>getComputedStyle(e).height)).toBe('59px');}
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/');await setSource(page,fixture);await page.getByRole('button',{name:'即时预览',exact:true}).click();const barHeight=await page.locator('.topbar').evaluate(e=>getComputedStyle(e).height);await open(page);await expect(page.getByRole('radio')).toHaveCount(16);
+ for(let i=0;i<ids.length;i++){await choose(page,names[i],ids[i]);await expect(page.getByRole('radio',{name:names[i],exact:true})).toHaveAttribute('aria-checked','true');await expectSource(page,fixture);expect(await page.locator('.topbar').evaluate(e=>getComputedStyle(e).height)).toBe(barHeight);}
  expect(errors).toEqual([]);await page.getByRole('button',{name:'完成',exact:true}).click();await expect(page.locator('.cm-md-h1')).toContainText('主题测试');
 });
 test('主题颜色字体生效、保存后重开、搜索和筛选',async({page})=>{
