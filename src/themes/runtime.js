@@ -1,0 +1,15 @@
+import{getTheme,THEME_STORAGE,accentForeground,themeAppearance,THEME_MODE_STORAGE}from'./catalog';
+// Vite emits each preset as a local lazy chunk; fonts are embedded data URLs.
+// https://vite.dev/guide/features.html#glob-import
+const loaders=import.meta.glob('./generated/*.js');
+const cache=new Map();
+export async function loadTheme(id){
+ const theme=getTheme(id);if(theme.id.startsWith('moji-'))return{editorCSS:'',exportCSS:`.theme-content{font:18px/1.9 Georgia,"Songti SC",serif;color:${theme.palette.text};background:${theme.palette.bg}}.theme-content pre{padding:20px;background:${theme.dark?'#2a2931':'#f6f6f8'};overflow:auto}.theme-content table{border-collapse:collapse}.theme-content td,.theme-content th{border:1px solid ${theme.dark?'#50535b':'#ddd'};padding:8px}.theme-content blockquote{border-left:3px solid ${theme.palette.accent};padding-left:20px}.theme-content img,.theme-content svg{max-width:100%}`};
+ if(!cache.has(theme.id))cache.set(theme.id,loaders['./generated/'+theme.id+'.js']().then(module=>module.default));return cache.get(theme.id);
+}
+const keys=['bg','side','text','muted','border','accent','selected','code','hover','shadow'];
+export function applyThemePalette(id,mode){const theme=themeAppearance(id,mode),root=document.documentElement;root.dataset.theme=theme.dark?'dark':'light';root.dataset.themeId=theme.id;root.style.setProperty('--on-accent',accentForeground(theme.palette.accent));for(const key of keys){if(theme.id.startsWith('moji-'))root.style.removeProperty('--'+key);else if(theme.palette[key])root.style.setProperty('--'+key,theme.palette[key]);}localStorage.setItem(THEME_STORAGE,theme.id);localStorage.setItem(THEME_MODE_STORAGE,theme.dark?'dark':'light');localStorage.setItem('moji.theme',theme.dark?'dark':'light');return theme;}
+export async function themeExportCSS(id,mode){const theme=themeAppearance(id,mode),{exportCSS}=await loadTheme(theme.id);return `body{background:${theme.palette.bg};color:${theme.palette.text}}`+exportCSS+appearanceCSS(id,mode,true);}
+
+// Changing brightness preserves the preset's typography and geometry.
+export function appearanceCSS(id,mode,exporting=false){const original=getTheme(id),theme=themeAppearance(id,mode);if(original.dark===theme.dark)return '';const p=theme.palette,scope=exporting?'.theme-content':`[data-theme-id="${id}"] .markdown-engine .cm-content.writing`;return `${scope}{color:${p.text}!important;background:${p.bg}!important;--text-color:${p.text};--bg-color:${p.bg};--primary-color:${p.accent};--border-color:${p.border}}${scope} :is(h1,h2,h3,h4,h5,h6,p,li,blockquote,strong,em,span,.cm-line,.cm-md-heading){color:inherit!important}${scope} :is(h1,h2,h3,h4,h5,h6,blockquote,.cm-md-quote-line,table,th,td,hr,.cm-md-heading){border-color:${p.border}!important}${scope} :is(a,.cm-md-link){color:${p.accent}!important}${scope} :is(pre,code,.cm-md-code-line,.cm-md-inline-code){background:${p.code}!important;color:${p.text}!important}${scope} :is(tr,th,td){background:${p.bg}!important;color:${p.text}!important}${scope} :is(blockquote,.cm-md-quote-line){background:${p.code}!important;color:${p.text}!important}`;}

@@ -1,0 +1,32 @@
+node_modules/
+dist/
+.local/
+test-results/
+playwright-report/
+.env*
+src-tauri/target/
+src-tauri/gen/
+release/
+.DS_Store
+
+.analysis/
+# Local agent metadata, application data, and raw reverse-engineering captures
+.codex/
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+*.db
+*.pem
+*.key
+research/*.json
+research/typora*.jpg
+*.cany
+*.asar
+
+# Publish product validation notes, not raw application investigation captures.
+research/*
+!research/墨记*.md
+!research/墨记*.jpg
+!research/fixtures/
+research/fixtures/*
+!research/fixtures/墨记0.4功能示例.md

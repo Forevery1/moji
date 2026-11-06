@@ -1,0 +1,2 @@
+import React from 'react';import{createRoot}from'react-dom/client';import App from './App';import{loadWorkspace}from'./store';import{initialData}from'./native';import './style.css';
+const root=createRoot(document.getElementById('root'));root.render(<div className="boot-screen">正在打开墨记…</div>);initialData(loadWorkspace).then(({workspace,chats})=>root.render(<App initialWorkspace={workspace} initialChats={chats}/>)).catch(()=>root.render(<div className="boot-screen"><h2>无法读取本地数据库</h2><p>为避免覆盖文档，墨记暂停加载。请重新启动应用，或检查数据目录权限。</p></div>));

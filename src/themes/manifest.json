@@ -1,0 +1,268 @@
+[
+  {
+    "id": "github",
+    "name": "GitHub",
+    "group": "内置主题",
+    "dark": false,
+    "rem": "16px",
+    "palette": {
+      "bg": "#ffffff",
+      "text": "rgb(51, 51, 51)",
+      "accent": "#4183C4",
+      "side": "#fafafa",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "gothic",
+    "name": "Gothic",
+    "group": "内置主题",
+    "dark": false,
+    "rem": "16px",
+    "palette": {
+      "bg": "#fcfcfc",
+      "text": "#333333",
+      "accent": "#990000",
+      "side": "#f7f7f8",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "newsprint",
+    "name": "Newsprint",
+    "group": "内置主题",
+    "dark": false,
+    "rem": "16px",
+    "palette": {
+      "bg": "#f3f2ee",
+      "text": "#1f0909",
+      "accent": "#065588",
+      "side": "#f7f7f8",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "night",
+    "name": "Night",
+    "group": "内置主题",
+    "dark": true,
+    "rem": "16px",
+    "palette": {
+      "bg": "#363B40",
+      "text": "#b8bfc6",
+      "accent": "#6dc1e7",
+      "side": "#2E3033",
+      "muted": "#a6a6b0",
+      "border": "#50535b",
+      "code": "#292b32",
+      "hover": "#3c3b45",
+      "selected": "#33313c",
+      "shadow": "0 16px 65px #0005"
+    }
+  },
+  {
+    "id": "pixyll",
+    "name": "Pixyll",
+    "group": "内置主题",
+    "dark": false,
+    "rem": "16px",
+    "palette": {
+      "bg": "#ffffff",
+      "text": "#333",
+      "accent": "#463F5C",
+      "side": "#f7f7f8",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "vue",
+    "name": "Vue",
+    "group": "内置主题",
+    "dark": false,
+    "rem": "16px",
+    "palette": {
+      "bg": "#ffffff",
+      "text": "#34495e",
+      "accent": "#42b983",
+      "side": "#fff",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "vue-dark",
+    "name": "Vue Dark",
+    "group": "内置主题",
+    "dark": true,
+    "rem": "16px",
+    "palette": {
+      "bg": "#1d1d1d",
+      "text": "#aaaaaa",
+      "accent": "#42b983",
+      "side": "#1d1d1d",
+      "muted": "#a6a6b0",
+      "border": "#50535b",
+      "code": "#292b32",
+      "hover": "#3c3b45",
+      "selected": "#33313c",
+      "shadow": "0 16px 65px #0005"
+    }
+  },
+  {
+    "id": "whitey",
+    "name": "Whitey",
+    "group": "内置主题",
+    "dark": false,
+    "rem": "19px",
+    "palette": {
+      "bg": "#fefefe",
+      "text": "#333",
+      "accent": "#2484c1",
+      "side": "#f7f7f8",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "classic-github",
+    "name": "GitHub · 经典版",
+    "group": "经典主题",
+    "dark": false,
+    "rem": "16px",
+    "palette": {
+      "bg": "#ffffff",
+      "text": "rgb(51, 51, 51)",
+      "accent": "#4183C4",
+      "side": "#fafafa",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "classic-gothic",
+    "name": "Gothic · 经典版",
+    "group": "经典主题",
+    "dark": false,
+    "rem": "16px",
+    "palette": {
+      "bg": "#fcfcfc",
+      "text": "#333333",
+      "accent": "#990000",
+      "side": "#f7f7f8",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "classic-newsprint",
+    "name": "Newsprint · 经典版",
+    "group": "经典主题",
+    "dark": false,
+    "rem": "16px",
+    "palette": {
+      "bg": "#f3f2ee",
+      "text": "#1f0909",
+      "accent": "#065588",
+      "side": "#f7f7f8",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "classic-night",
+    "name": "Night · 经典版",
+    "group": "经典主题",
+    "dark": true,
+    "rem": "16px",
+    "palette": {
+      "bg": "#363B40",
+      "text": "#b8bfc6",
+      "accent": "#6dc1e7",
+      "side": "#2E3033",
+      "muted": "#a6a6b0",
+      "border": "#50535b",
+      "code": "#292b32",
+      "hover": "#3c3b45",
+      "selected": "#33313c",
+      "shadow": "0 16px 65px #0005"
+    }
+  },
+  {
+    "id": "classic-pixyll",
+    "name": "Pixyll · 经典版",
+    "group": "经典主题",
+    "dark": false,
+    "rem": "16px",
+    "palette": {
+      "bg": "#ffffff",
+      "text": "#333",
+      "accent": "#463F5C",
+      "side": "#f7f7f8",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  },
+  {
+    "id": "classic-whitey",
+    "name": "Whitey · 经典版",
+    "group": "经典主题",
+    "dark": false,
+    "rem": "19px",
+    "palette": {
+      "bg": "#fefefe",
+      "text": "#333",
+      "accent": "#2484c1",
+      "side": "#f7f7f8",
+      "muted": "#767680",
+      "border": "#dedee3",
+      "code": "#f5f5f7",
+      "hover": "#f0eef5",
+      "selected": "#eae6f3",
+      "shadow": "0 16px 65px #2420301a"
+    }
+  }
+]

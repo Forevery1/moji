@@ -1,0 +1,58 @@
+import {Facet,StateField,StateEffect,EditorSelection,Transaction}from'@codemirror/state';
+import {EditorView,Decoration,WidgetType}from'@codemirror/view';
+import{syntaxTree}from'@codemirror/language';
+import{safeImageURL}from'./markdown.js';
+import{collectMath,mathFromNode}from'./mathSyntax.js';
+import{SpecialWidget}from'./specialWidgets.js';
+import{VisualTableWidget}from'./tableWidget.js';
+import{readTable,showTableSource}from'./tableModel.js';
+// Direct StateField decorations support block widgets. Position mapping is
+// delegated to CM ChangeDesc, so repaint never edits the Markdown document.
+// https://codemirror.net/examples/decoration/
+export const previewTheme=Facet.define({combine:values=>values.at(-1)??'light'});
+export const liveMode=Facet.define({combine:values=>values.at(-1)??true});
+export const compositionChange=StateEffect.define();
+export const focusChange=StateEffect.define();
+export const refreshPreview=StateEffect.define();
+function active(state,node,focused){return focused&&state.selection.ranges.some(r=>r.empty?r.head>=node.from&&r.head<=node.to:r.from<node.to&&r.to>node.from);}
+class BulletWidget extends WidgetType{constructor(text){super();this.text=text;}eq(other){return this.text===other.text;}toDOM(){const span=document.createElement('span');span.className='cm-md-bullet';span.textContent=this.text;span.setAttribute('aria-hidden','true');return span;}ignoreEvent(){return false;}}
+class CheckboxWidget extends WidgetType{constructor(checked,from){super();this.checked=checked;this.from=from;}eq(other){return this.checked===other.checked&&this.from===other.from;}toDOM(view){const input=document.createElement('input');input.type='checkbox';input.checked=this.checked;input.className='cm-md-checkbox';input.setAttribute('aria-label',this.checked?'已完成任务':'未完成任务');input.addEventListener('mousedown',e=>e.preventDefault());input.addEventListener('click',e=>{e.preventDefault();const from=this.from+1;if(from<view.state.doc.length)view.dispatch({changes:{from,to:from+1,insert:this.checked?' ':'x'},annotations:Transaction.userEvent.of('input.task')});});return input;}ignoreEvent(){return true;}}
+class RuleWidget extends WidgetType{toDOM(){const span=document.createElement('span');span.className='cm-md-rule';span.setAttribute('aria-label','分隔线');return span;}eq(){return true;}ignoreEvent(){return false;}}
+class ImageWidget extends WidgetType{constructor(url,alt,from){super();this.url=url;this.alt=alt;this.from=from;}eq(other){return this.url===other.url&&this.alt===other.alt&&this.from===other.from;}toDOM(view){const span=document.createElement('span');span.className='cm-md-image';const image=document.createElement('img');image.src=this.url;image.alt=this.alt;image.loading='lazy';image.addEventListener('load',()=>view.requestMeasure());image.addEventListener('error',()=>{image.alt=this.alt+'（图片加载失败，点击编辑）';view.requestMeasure();});span.append(image);span.addEventListener('mousedown',e=>{e.preventDefault();view.dispatch({selection:EditorSelection.cursor(Math.min(this.from+2,view.state.doc.length)),effects:focusChange.of(true)});view.focus();});return span;}ignoreEvent(){return true;}}
+export function tableCellPositions(node,doc){return readTable(doc.sliceString(node.from,node.to),node.from)?.rows.flatMap(row=>row.cells.map(cell=>cell.from))||[];}
+function references(tree,doc){const map=new Map();tree.iterate({enter(ref){if(ref.name!=='LinkReference')return;let label,url;for(let c=ref.node.firstChild;c;c=c.nextSibling){if(c.name==='LinkLabel')label=doc.sliceString(c.from+1,c.to-1);if(c.name==='URL')url=doc.sliceString(c.from,c.to).replace(/^<|>$/g,'');}if(label&&url&&!map.has(label.trim().replace(/\s+/g,' ').toLowerCase()))map.set(label.trim().replace(/\s+/g,' ').toLowerCase(),url);}});return map;}
+function referenceTarget(node,doc,map){let labelNode=null;for(let c=node.firstChild;c;c=c.nextSibling){if(c.name==='URL')return doc.sliceString(c.from,c.to).replace(/^<|>$/g,'');if(c.name==='LinkLabel')labelNode=c;}const raw=doc.sliceString(node.from,node.to);const label=labelNode?doc.sliceString(labelNode.from+1,labelNode.to-1)||raw.slice(raw.startsWith('![')?2:1,raw.indexOf(']')):raw.slice(raw.startsWith('![')?2:1,raw.indexOf(']'));return map.get(label.trim().replace(/\s+/g,' ').toLowerCase())||null;}
+function decorate(state,focused,sourceTable=null){if(!state.facet(liveMode))return Decoration.none;const decorations=[],lineClasses=new Map();const doc=state.doc;function hide(from,to){if(to>from)decorations.push(Decoration.replace({inclusive:false}).range(from,to));}function mark(from,to,cls){if(to>from)decorations.push(Decoration.mark({class:cls}).range(from,to));}function line(pos,cls,attributes){const start=doc.lineAt(pos).from;const old=lineClasses.get(start)||{classes:new Set(),attributes:{}};old.classes.add(cls);Object.assign(old.attributes,attributes);lineClasses.set(start,old);}function lines(node,cls){let from=doc.lineAt(node.from).number,to=doc.lineAt(node.to).number;for(let n=from;n<=to;n++)line(doc.line(n).from,cls);}const tree=syntaxTree(state),refs=references(tree,doc),math=collectMath(tree,doc).filter(m=>m.closed),theme=state.facet(previewTheme);tree.iterate({enter(ref){const node=ref.node,name=node.name,selected=active(state,node,focused);const children=[];for(let c=node.firstChild;c;c=c.nextSibling)children.push(c);
+ const heading=/^(ATX|Setext)Heading([1-6])$/.exec(name);if(heading){line(node.from,'cm-md-heading cm-md-h'+heading[2],{role:'heading','aria-level':heading[2]});for(const child of children.filter(n=>n.name==='HeaderMark')){if(selected)mark(child.from,child.to,'cm-md-syntax');else{const text=doc.sliceString(child.to,Math.min(child.to+1,doc.length));hide(child.from,child.to+(text===' '?1:0));if(child.from>doc.lineAt(node.from).to)line(child.from,'cm-md-meta-line');}}}
+ if(name==='StrongEmphasis'||name==='Emphasis'||name==='Strikethrough'||name==='InlineCode'){const markers=children.filter(n=>['EmphasisMark','StrikethroughMark','CodeMark'].includes(n.name));if(markers.length>=2){mark(markers[0].to,markers.at(-1).from,{'StrongEmphasis':'cm-md-strong','Emphasis':'cm-md-em','Strikethrough':'cm-md-strike','InlineCode':'cm-md-inline-code'}[name]);for(const m of markers)selected?mark(m.from,m.to,'cm-md-syntax'):hide(m.from,m.to);}}
+ if(name==='Escape'){selected?mark(node.from,node.from+1,'cm-md-syntax'):hide(node.from,node.from+1);}
+ if(name==='Link'&&referenceTarget(node,doc,refs)){const marks=children.filter(n=>n.name==='LinkMark');if(marks.length>=2){const labelFrom=marks[0].to,labelTo=marks[1].from;mark(labelFrom,labelTo,'cm-md-link');if(selected){for(const m of marks)mark(m.from,m.to,'cm-md-syntax');const url=children.find(n=>n.name==='URL');if(url)mark(url.from,url.to,'cm-md-url');}else{hide(node.from,labelFrom);hide(labelTo,node.to);}}}
+ if(name==='Image'&&!selected){const raw=doc.sliceString(node.from,node.to),target=referenceTarget(node,doc,refs);const url=target&&safeImageURL(target);if(url){const alt=raw.slice(2,raw.indexOf(']'));decorations.push(Decoration.replace({widget:new ImageWidget(url,alt,node.from)}).range(node.from,node.to));return false;}}
+ if(name==='ListMark'){const item=node.parent,selectedItem=active(state,item,focused),text=doc.sliceString(node.from,node.to);if(selectedItem)mark(node.from,node.to,'cm-md-syntax');else{const task=doc.sliceString(node.to,Math.min(node.to+5,doc.length)).match(/^\s+\[[ xX]\]/);decorations.push(Decoration.replace({widget:new BulletWidget(task?'':/^\d/.test(text)?text:'•')}).range(node.from,node.to));}line(node.from,'cm-md-list-line');}
+ if(name==='TaskMarker'){const checked=/[xX]/.test(doc.sliceString(node.from,node.to));if(selected&&state.selection.main.head>=node.from&&state.selection.main.head<=node.to)mark(node.from,node.to,'cm-md-syntax');else decorations.push(Decoration.replace({widget:new CheckboxWidget(checked,node.from)}).range(node.from,node.to));}
+ if(name==='Paragraph'){lines(node,'cm-md-paragraph');}
+ if(name==='Blockquote'){lines(node,'cm-md-quote-line');}
+ if(name==='QuoteMark'){const activeLine=active(state,{from:doc.lineAt(node.from).from,to:doc.lineAt(node.from).to},focused);if(activeLine)mark(node.from,node.to,'cm-md-syntax');else hide(node.from,node.to+(doc.sliceString(node.to,node.to+1)===' '?1:0));}
+ if(name==='MathBlock'||name==='InlineMath'){
+  const item={...mathFromNode(node,doc),index:math.findIndex(m=>m.from===node.from)};
+  if(!selected&&item.closed)decorations.push(Decoration.replace({block:item.display,widget:new SpecialWidget('math',item,math,theme)}).range(node.from,node.to));
+  else{mark(node.from,node.to,'cm-md-math-source');if(item.closed)decorations.push(Decoration.widget({block:item.display,side:1,widget:new SpecialWidget('math',item,math,theme,true)}).range(node.to));}
+  return false;
+ }
+ if(name==='FencedCode'&&children.find(c=>c.name==='CodeInfo')&&doc.sliceString(children.find(c=>c.name==='CodeInfo').from,children.find(c=>c.name==='CodeInfo').to).trim().split(/\s+/)[0].toLowerCase()==='mermaid'){
+  const bodyFrom=Math.min(node.to,doc.lineAt(node.from).to+1),last=children.at(-1),bodyTo=last?.name==='CodeMark'?Math.max(bodyFrom,doc.lineAt(last.from).from-1):node.to;
+  const item={from:node.from,to:node.to,bodyFrom,tex:doc.sliceString(bodyFrom,bodyTo),display:true};
+  if(!selected)decorations.push(Decoration.replace({block:true,widget:new SpecialWidget('mermaid',item,null,theme)}).range(node.from,node.to));
+  else{lines(node,'cm-md-code-line');decorations.push(Decoration.widget({block:true,side:1,widget:new SpecialWidget('mermaid',item,null,theme,true)}).range(node.to));}
+  return false;
+ }
+ if(name==='FencedCode'||name==='CodeBlock'){lines(node,'cm-md-code-line');if(name==='FencedCode'){for(const child of children.filter(n=>n.name==='CodeMark'||n.name==='CodeInfo')){if(selected)mark(child.from,child.to,'cm-md-syntax');else hide(child.from,child.to);line(child.from,'cm-md-code-meta');}}return false;}
+ if(name==='HorizontalRule'&&!selected){decorations.push(Decoration.replace({widget:new RuleWidget()}).range(node.from,node.to));return false;}
+ if(name==='Table'){
+  if(!readTable(doc.sliceString(node.from,node.to),node.from)){lines(node,'cm-md-table-source');return false;}
+  if(sourceTable===node.from&&selected){lines(node,'cm-md-table-source');}
+  else decorations.push(Decoration.replace({block:true,widget:new VisualTableWidget(doc.sliceString(node.from,node.to),node.from,[...refs].map(([key,url])=>'['+key+']: <'+url+'>').join('\n'),math,theme)}).range(node.from,node.to));
+  return false;
+ }
+ }});for(const[from,value]of lineClasses)decorations.push(Decoration.line({class:[...value.classes].join(' '),attributes:value.attributes}).range(from));return Decoration.set(decorations,true);}
+export const previewState=StateField.define({create(state){return{decorations:decorate(state,false),composing:false,focused:false,sourceTable:null};},update(value,tr){let composing=value.composing,focused=value.focused,sourceTable=value.sourceTable,refresh=false;for(const effect of tr.effects){if(effect.is(compositionChange)){composing=effect.value;refresh=true;}if(effect.is(focusChange)){focused=effect.value;refresh=true;}if(effect.is(showTableSource)){sourceTable=effect.value;refresh=true;}if(effect.is(refreshPreview))refresh=true;}if(sourceTable!==null)sourceTable=tr.changes.mapPos(sourceTable);if(composing)return{decorations:value.decorations.map(tr.changes),composing,focused,sourceTable};const changed=tr.docChanged||tr.selection||tr.reconfigured||refresh||syntaxTree(tr.startState)!==syntaxTree(tr.state);return{decorations:changed?decorate(tr.state,focused,sourceTable):value.decorations,composing,focused,sourceTable};},provide:field=>EditorView.decorations.from(field,value=>value.decorations)});

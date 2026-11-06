@@ -1,0 +1,419 @@
+Moji bundled themes / 墨记内置主题
+Source: user-provided themes.zip
+SHA-256: 1cc86a717e18dfefa714e7870e60ae77323f930cce69576079ab897ebc2e83bf
+
+Original source notices and font license text follow. Original CSS and assets are retained in the project themes/presets directory.
+
+
+=== Readme.md ===
+The built-in CSS will be replaced after update / reinstall, DO NOT MODIFY THEM.
+
+Refer https://support.typora.io/Add-Custom-CSS/ when you want to modify those CSS.
+Refer https://support.typora.io/About-Themes/ if you want to create / install new themes. 
+
+=== github.css ===
+/* open-sans-regular - latin-ext_latin */
+/* open-sans-italic - latin-ext_latin */
+/* open-sans-700 - latin-ext_latin */
+/* open-sans-700italic - latin-ext_latin */
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+/*border: 1px solid #ddd;*/
+/** focus mode */
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+=== gothic/GUST e-foundry License.txt ===
+This is a preliminary version (2006-09-30), barring acceptance from
+the LaTeX Project Team and other feedback, of the GUST Font License.
+(GUST is the Polish TeX Users Group, http://www.gust.org.pl)
+
+For the most recent version of this license see
+http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt
+or
+http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+This work may be distributed and/or modified under the conditions
+of the LaTeX Project Public License, either version 1.3c of this
+license or (at your option) any later version.
+
+Please also observe the following clause:
+1) it is requested, but not legally required, that derived works be
+   distributed only after changing the names of the fonts comprising this
+   work and given in an accompanying "manifest", and that the
+   files comprising the Work, as listed in the manifest, also be given
+   new names. Any exceptions to this request are also given in the
+   manifest.
+   
+   We recommend the manifest be given in a separate file named
+   MANIFEST-<fontid>.txt, where <fontid> is some unique identification
+   of the font family. If a separate "readme" file accompanies the Work, 
+   we recommend a name of the form README-<fontid>.txt.
+
+The latest version of the LaTeX Project Public License is in
+http://www.latex-project.org/lppl.txt and version 1.3c or later
+is part of all distributions of LaTeX version 2006/05/20 or later.
+
+=== gothic.css ===
+/* cyrillic-ext */
+/* cyrillic */
+/*background: #f0f0f0;*/
+/*◘*/
+/* Chrome 29+ */
+/** ui for windows **/
+
+=== newsprint.css ===
+/* meyer reset -- http://meyerweb.com/eric/tools/css/reset/ , v2.0 | 20110126 | License: none (public domain) */
+/* =========== */
+/* pt-serif-regular - latin */
+/* pt-serif-italic - latin */
+/* pt-serif-700 - latin */
+/* pt-serif-700italic - latin */
+/*#write {
+	overflow-x: auto;
+    max-width: initial;
+	padding-left: calc(50% - 17em);
+    padding-right: calc(50% - 17em);
+}
+
+@media (max-width: 36em) {
+ 	#write {
+ 		padding-left: 1em;
+    	padding-right: 1em;
+ 	}
+}*/
+/* styles */
+/* ====== */
+/* headings */
+/*30 / 16*/
+/* 48 / 30*/
+/*21 / 16*/
+/*24 / 21*/
+/*48 / 21*/
+/*24 / 21*/
+/*18 / 16*/
+/*48 / 18*/
+/*16*/
+/* links */
+/* block spacing */
+/* blockquote */
+/* lists */
+/* tables */
+/*24 / 16*/
+/* width: 100%; */
+/* some fixes */
+/** UI for electron */
+/* https://github.com/typora/typora-issues/issues/2046 */
+
+=== night/codeblock.dark.css ===
+/* CSS Document */
+/** code highlight */
+
+=== night/sourcemode.dark.css ===
+/* CSS Document */
+/** markdown source **/
+
+=== night.css ===
+/* 36px */
+/* 40px */
+/* 24px */
+/* 24px */
+/* 30px */
+/* 24px */
+/* 18px */
+/* 24px */
+/* 24px */
+/* 16px */
+/* 22px */
+/* 24px */
+/* 16px */
+/* 22px */
+/* 24px */
+/* 16px */
+/* 16px */
+/* 24px */
+/* 30px */
+/* variable */
+/* variable */
+/* variable */
+/* variable */
+/*◘*/
+/** quick open **/
+/** UI for electron */
+/** focus mode */
+/*diagrams*/
+/*diagrams*/
+/* try fix https://github.com/typora/typora-issues/issues/5253 */
+
+=== old-themes/Readme.md ===
+The built-in CSS will be replaced after update / reinstall, DO NOT MODIFY THEM.
+
+Refer https://support.typora.io/Add-Custom-CSS/ when you want to modify those CSS.
+Refer https://support.typora.io/About-Themes/ if you want to create / install new themes. 
+
+=== old-themes/github.css ===
+/* open-sans-regular - latin-ext_latin */
+/* open-sans-italic - latin-ext_latin */
+/* open-sans-700 - latin-ext_latin */
+/* open-sans-700italic - latin-ext_latin */
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+/*border: 1px solid #ddd;*/
+/** focus mode */
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+=== old-themes/gothic/GUST e-foundry License.txt ===
+This is a preliminary version (2006-09-30), barring acceptance from
+the LaTeX Project Team and other feedback, of the GUST Font License.
+(GUST is the Polish TeX Users Group, http://www.gust.org.pl)
+
+For the most recent version of this license see
+http://www.gust.org.pl/fonts/licenses/GUST-FONT-LICENSE.txt
+or
+http://tug.org/fonts/licenses/GUST-FONT-LICENSE.txt
+
+This work may be distributed and/or modified under the conditions
+of the LaTeX Project Public License, either version 1.3c of this
+license or (at your option) any later version.
+
+Please also observe the following clause:
+1) it is requested, but not legally required, that derived works be
+   distributed only after changing the names of the fonts comprising this
+   work and given in an accompanying "manifest", and that the
+   files comprising the Work, as listed in the manifest, also be given
+   new names. Any exceptions to this request are also given in the
+   manifest.
+   
+   We recommend the manifest be given in a separate file named
+   MANIFEST-<fontid>.txt, where <fontid> is some unique identification
+   of the font family. If a separate "readme" file accompanies the Work, 
+   we recommend a name of the form README-<fontid>.txt.
+
+The latest version of the LaTeX Project Public License is in
+http://www.latex-project.org/lppl.txt and version 1.3c or later
+is part of all distributions of LaTeX version 2006/05/20 or later.
+
+=== old-themes/gothic.css ===
+/* cyrillic-ext */
+/* cyrillic */
+/*background: #f0f0f0;*/
+/*◘*/
+/* Chrome 29+ */
+/** ui for windows **/
+
+=== old-themes/newsprint.css ===
+/* meyer reset -- http://meyerweb.com/eric/tools/css/reset/ , v2.0 | 20110126 | License: none (public domain) */
+/* =========== */
+/* pt-serif-regular - latin */
+/* pt-serif-italic - latin */
+/* pt-serif-700 - latin */
+/* pt-serif-700italic - latin */
+/*#write {
+	overflow-x: auto;
+    max-width: initial;
+	padding-left: calc(50% - 17em);
+    padding-right: calc(50% - 17em);
+}
+
+@media (max-width: 36em) {
+ 	#write {
+ 		padding-left: 1em;
+    	padding-right: 1em;
+ 	}
+}*/
+/* styles */
+/* ====== */
+/* headings */
+/*30 / 16*/
+/* 48 / 30*/
+/*21 / 16*/
+/*24 / 21*/
+/*48 / 21*/
+/*24 / 21*/
+/*18 / 16*/
+/*48 / 18*/
+/*16*/
+/* links */
+/* block spacing */
+/* blockquote */
+/* lists */
+/* tables */
+/*24 / 16*/
+/* width: 100%; */
+/* some fixes */
+/** UI for electron */
+/* https://github.com/typora/typora-issues/issues/2046 */
+
+=== old-themes/night/codeblock.dark.css ===
+/* CSS Document */
+/** code highlight */
+
+=== old-themes/night/sourcemode.dark.css ===
+/* CSS Document */
+/** markdown source **/
+
+=== old-themes/night.css ===
+/* 36px */
+/* 40px */
+/* 24px */
+/* 24px */
+/* 30px */
+/* 24px */
+/* 18px */
+/* 24px */
+/* 24px */
+/* 16px */
+/* 22px */
+/* 24px */
+/* 16px */
+/* 22px */
+/* 24px */
+/* 16px */
+/* 16px */
+/* 24px */
+/* 30px */
+/* variable */
+/* variable */
+/* variable */
+/* variable */
+/*◘*/
+/** quick open **/
+/** UI for electron */
+/** focus mode */
+/*diagrams*/
+/*diagrams*/
+
+=== old-themes/pixyll.css ===
+/**
+ * forked from pixyll.com
+ * MIT license
+ */
+/*
+ Pixyll
+ A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.
+ Best served with BASSCSS (http://jxnblk.github.io/basscss)
+ Crafted with <3 by John Otander (@4lpine) - ©2015 John Otander MIT License http://opensource.org/licenses/MIT
+
+*/
+/** source code mode */
+
+=== old-themes/whitey.css ===
+/* Typography
+-------------------------------------------------------- */
+/** source code mode */
+
+=== pixyll.css ===
+/**
+ * forked from pixyll.com
+ * MIT license
+ */
+/*
+ Pixyll
+ A simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.
+ Best served with BASSCSS (http://jxnblk.github.io/basscss)
+ Crafted with <3 by John Otander (@4lpine) - ©2015 John Otander MIT License http://opensource.org/licenses/MIT
+
+*/
+/** source code mode */
+
+=== vue/fonts.css ===
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+/* cyrillic-ext */
+/* cyrillic */
+/* greek-ext */
+/* greek */
+/* vietnamese */
+/* latin-ext */
+/* latin */
+
+=== vue-dark.css ===
+/* code color */
+/* text-indent: 2rem; */
+/* background-color: hsl(0, 0%, 2%); */
+/* border: 1px solid hsl(210, 10%, 11%); */
+/* border: 2px solid hsl(210, 10%, 11%); */
+/* border: 2px solid hsl(0, 0%, 4%); */
+/* background-color: hsl(0, 0%, 5%); */
+/* heighlight. */
+/*body {
+        width: 854px;
+        margin: 0 auto;
+    }*/
+/** focus mode */
+/* transition: color 150ms, background-color 150ms; */
+/* border-color: transparent !important */
+/* .auto-suggest-container li { */
+/* transition: all 150ms; */
+/* text-align: center !important; */
+/* } */
+/* text-align: right !important; */
+/* windows */
+/* .modal-dialog { */
+/* color: #000; */
+/* } */
+/* cursor */
+/* selected text */
+/* .CodeMirror-selecte { */
+/* background-color: hsla(153, 47%, 49%, 0.5) !important; */
+/* color: #eeeeee !important; */
+/* } */
+
+=== vue.css ===
+/* heighlight. */
+/** focus mode */
+
+=== whitey.css ===
+/* Typography
+-------------------------------------------------------- */
+/** source code mode */

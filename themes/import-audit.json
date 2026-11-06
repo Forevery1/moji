@@ -1,0 +1,72 @@
+[
+  {
+    "id": "github",
+    "assets": 4,
+    "missing": []
+  },
+  {
+    "id": "gothic",
+    "assets": 6,
+    "missing": []
+  },
+  {
+    "id": "newsprint",
+    "assets": 4,
+    "missing": []
+  },
+  {
+    "id": "night",
+    "assets": 0,
+    "missing": []
+  },
+  {
+    "id": "pixyll",
+    "assets": 8,
+    "missing": []
+  },
+  {
+    "id": "vue",
+    "assets": 28,
+    "missing": []
+  },
+  {
+    "id": "vue-dark",
+    "assets": 28,
+    "missing": []
+  },
+  {
+    "id": "whitey",
+    "assets": 0,
+    "missing": []
+  },
+  {
+    "id": "classic-github",
+    "assets": 4,
+    "missing": []
+  },
+  {
+    "id": "classic-gothic",
+    "assets": 6,
+    "missing": []
+  },
+  {
+    "id": "classic-newsprint",
+    "assets": 4,
+    "missing": []
+  },
+  {
+    "id": "classic-night",
+    "assets": 0,
+    "missing": []
+  },
+  {
+    "id": "classic-pixyll",
+    "assets": 8,
+    "missing": []
+  },
+  {
+    "id": "classic-whitey",
+    "assets": 0,
+    "missing": []
+  }
+]
