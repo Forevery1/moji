@@ -1,14 +1,16 @@
+import {highlightSyntax,highlightMatch} from './highlightSyntax.js';
 import {parser,GFM} from '@lezer/markdown';
 import {Marked} from 'marked';
 import DOMPurify from 'dompurify';
 import {mathSyntax,inlineMathEnd} from './mathSyntax.js';
 // CommonMark/GFM syntax and source positions, not HTML DOM offsets.
 // https://github.com/lezer-parser/markdown#readme
-export const markdownParser=parser.configure([GFM,mathSyntax]);
+export const markdownParser=parser.configure([GFM,mathSyntax,highlightSyntax]);
 const escape=text=>String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const mathToken=(raw,tex,display)=>({type:display?'mojiBlockMath':'mojiInlineMath',raw,tex,display});
 const mathHTML=token=>`<${token.display?'div':'span'} class="moji-math-placeholder" data-tex="${encodeURIComponent(token.tex)}" data-display="${token.display}">${escape(token.tex)}</${token.display?'div':'span'}>`;
 const marked=new Marked({gfm:true,breaks:false}, {extensions:[
+ {name:'mojiHighlight',level:'inline',start:src=>src.indexOf('=='),tokenizer(src){const m=highlightMatch(src);if(m)return {type:'mojiHighlight',raw:m[0],tokens:this.lexer.inlineTokens(m[1])};},renderer(token){return `<mark>${this.parser.parseInline(token.tokens)}</mark>`;}},
  {name:'mojiInlineMath',level:'inline',start:src=>{const dollar=src.indexOf('$'),slash=src.indexOf('\\(');return dollar<0?slash:slash<0?dollar:Math.min(dollar,slash);},tokenizer(src){const m=inlineMathEnd(src,0);if(m)return mathToken(src.slice(0,m.end),src.slice(m.bodyFrom,m.bodyTo),false);},renderer:mathHTML},
  {name:'mojiBlockMath',level:'block',start:src=>src.search(/^(?: {0,3})(?:\$\$|\\\[)\s*$/m),tokenizer(src){const lines=src.split('\n'),open=lines[0].trim();if(!['$$','\\['].includes(open))return;const close=open==='$$'?'$$':'\\]';let end=1;while(end<lines.length&&lines[end].trim()!==close)end++;if(end===lines.length)return;const raw=lines.slice(0,end+1).join('\n')+(lines.length>end+1?'\n':'');return mathToken(raw,lines.slice(1,end).join('\n'),true);},renderer:mathHTML}
  ],renderer:{code(token){if(token.lang?.trim().split(/\s+/)[0].toLowerCase()==='mermaid')return `<div class="moji-mermaid-placeholder" data-source="${encodeURIComponent(token.text)}">${escape(token.text)}</div>`;return false;}}});

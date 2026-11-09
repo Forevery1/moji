@@ -1,6 +1,6 @@
 [package]
 name = "moji"
-version = "0.8.0"
+version = "0.8.1"
 description = "墨记 AI Markdown Editor"
 authors = ["Moji"]
 edition = "2021"
