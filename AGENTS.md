@@ -10,4 +10,4 @@
 
 当前应用版本以 `package.json`、`src-tauri/Cargo.toml` 和 `src-tauri/tauri.conf.json` 为准。历史验证证据在 `research/`，正式构建与校验记录在 `release/macos/`。
 
-GitHub仓库为 `fuhanshen/moji`；正式版本tag使用 `v<版本>`。安装包资产命名契约为 `Moji-<版本>-Apple-Silicon.dmg`、`Moji-<版本>-Intel.dmg`，客户端检查更新依赖该命名。使用 `python3 script/release.py --build` 构建并生成DMG及文档快照；发布前完成上传所有资产，并附上脚本生成的`latest.json`，再将Release设为正式Latest。原始调查材料与本机数据不上传GitHub，发布产品说明与验证记录。
+GitHub仓库为 `fuhanshen/moji`；正式版本tag使用 `v<版本>`。安装包资产命名契约为 `Moji-<版本>-Apple-Silicon.dmg`、`Moji-<版本>-Intel.dmg`，客户端检查更新依赖该命名。**应用打包统一在 GitHub Actions 上完成，不在本地打包**：推送 `v<版本>` tag 触发 `.github/workflows/release-macos.yml`，工作流运行核心/Rust检查与 `python3 script/release.py --build`，生成双架构DMG与文档快照，上传全部资产（含脚本生成的`latest.json`）后自动将Release设为正式Latest；`workflow_dispatch` 可仅构建产物用于演练。本地只做检查、文档维护与源码/tag推送；本地历史构建记录（`release/macos/`）保留作历史证据。原始调查材料与本机数据不上传GitHub，发布产品说明与验证记录。
